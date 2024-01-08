@@ -21,8 +21,8 @@
  *  0  => true
  *  -5 => false
  */
-function isPositive(/* number */) {
-  throw new Error('Not implemented');
+function isPositive(number) {
+  return number >= 0;
 }
 
 /**
@@ -38,8 +38,14 @@ function isPositive(/* number */) {
  *  -5, 0, 5      => 5
  *  -0.1, 0, 0.2  => 0.2
  */
-function getMaxNumber(/* a, b, c */) {
-  throw new Error('Not implemented');
+function getMaxNumber(a, b, c) {
+  let num = a;
+  if (b > num) {
+    num = b;
+  } else if (c > num) {
+    num = c;
+  }
+  return num;
 }
 
 /**
@@ -82,8 +88,14 @@ function canQueenCaptureKing(/* queen, king */) {
  *  2, 2, 5   => false
  *  3, 0, 3   => false
  */
-function isIsoscelesTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isIsoscelesTriangle(a, b, c) {
+  function findSide(x, y, z) {
+    if (x === y && z > 0) {
+      return z < x + y;
+    }
+    return false;
+  }
+  return findSide(a, b, c) || findSide(b, c, a) || findSide(c, a, b);
 }
 
 /**
@@ -100,8 +112,39 @@ function isIsoscelesTriangle(/* a, b, c */) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  function addSymbol(symbol, n) {
+    let str = '';
+    for (let i = 1; i <= n; i += 1) {
+      str += symbol;
+    }
+    return str;
+  }
+
+  const n1 = Math.floor(num / 10);
+  let n2 = num % 10;
+  let n3 = false;
+  if (n2 >= 5 && n2 !== 9) {
+    n3 = true;
+    n2 -= 5;
+  }
+  let result = '';
+  if (n1) {
+    result += addSymbol('X', n1);
+  }
+  if (n2 === 9) {
+    result += 'IX';
+    return result;
+  }
+  if (n3) {
+    result += 'V';
+  }
+  if (n2 === 4) {
+    result += 'IV';
+  } else {
+    result += addSymbol('I', n2);
+  }
+  return result;
 }
 
 /**
@@ -119,8 +162,49 @@ function convertToRomanNumerals(/* num */) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  function switchValue(value) {
+    switch (value) {
+      case '0':
+        return 'zero';
+      case '1':
+        return 'one';
+      case '2':
+        return 'two';
+      case '3':
+        return 'three';
+      case '4':
+        return 'four';
+      case '5':
+        return 'five';
+      case '6':
+        return 'six';
+      case '7':
+        return 'seven';
+      case '8':
+        return 'eight';
+      case '9':
+        return 'nine';
+      case '.':
+      case ',':
+        return 'point';
+      case '-':
+        return 'minus';
+      default:
+        return '';
+    }
+  }
+  let result = '';
+  if (numberStr.length > 1) {
+    for (let i = 0; i < numberStr.length - 1; i += 1) {
+      result += `${switchValue(numberStr[i])} `;
+    }
+    result += switchValue(numberStr[numberStr.length - 1]);
+  } else {
+    result += switchValue(numberStr);
+  }
+
+  return result;
 }
 
 /**
@@ -135,8 +219,12 @@ function convertNumberToString(/* numberStr */) {
  *  '0123210'   => true
  *  'qweqwe'    => false
  */
-function isPalindrome(/* str */) {
-  throw new Error('Not implemented');
+function isPalindrome(str) {
+  let reversedStr = '';
+  for (let i = str.length - 1; i >= 0; i -= 1) {
+    reversedStr += str[i];
+  }
+  return str === reversedStr;
 }
 
 /**
@@ -153,8 +241,13 @@ function isPalindrome(/* str */) {
  *  'qwerty', 'Q'     => -1
  *  'qwerty', 'p'     => -1
  */
-function getIndexOf(/* str, letter */) {
-  throw new Error('Not implemented');
+function getIndexOf(str, letter) {
+  for (let i = 0; i < str.length; i += 1) {
+    if (str[i] === letter) {
+      return i;
+    }
+  }
+  return -1;
 }
 
 /**
@@ -172,8 +265,15 @@ function getIndexOf(/* str, letter */) {
  *  12345, 0    => false
  *  12345, 6    => false
  */
-function isContainNumber(/* num, digit */) {
-  throw new Error('Not implemented');
+function isContainNumber(num, digit) {
+  let n = num;
+  while (n > 9) {
+    if (n % 10 === digit) {
+      return true;
+    }
+    n = Math.floor(n / 10);
+  }
+  return n % 10 === digit;
 }
 
 /**
