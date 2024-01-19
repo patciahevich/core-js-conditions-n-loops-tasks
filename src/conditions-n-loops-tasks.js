@@ -394,8 +394,25 @@ function getSpiralMatrix(size) {
  *    [7, 8, 9]         [9, 6, 3]
  *  ]                 ]
  */
-function rotateMatrix(/* matrix */) {
-  throw new Error('Not implemented');
+function rotateMatrix(matrix) {
+  const copyArr = [];
+  for (let i = 0; i < matrix.length; i += 1) {
+    copyArr[copyArr.length] = [];
+    for (let j = 0; j < matrix.length; j += 1) {
+      copyArr[i][j] = matrix[i][j];
+    }
+  }
+
+  const workMatrix = matrix;
+  let rowCount = 0;
+  for (let i = copyArr.length - 1; i >= 0; i -= 1) {
+    const arr = copyArr[rowCount];
+    for (let j = 0; j < arr.length; j += 1) {
+      workMatrix[j][i] = arr[j];
+    }
+    rowCount += 1;
+  }
+  return matrix;
 }
 
 /**
@@ -411,10 +428,28 @@ function rotateMatrix(/* matrix */) {
  *  [2, 9, 5]       => [2, 5, 9]
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
- */
-function sortByAsc(/* arr */) {
-  throw new Error('Not implemented');
-}
+//  */
+// function sortByAsc(arr) {
+//   const result = [];
+//   for (let i = 0; i < arr.length; i += 1) {
+//     result[i] = arr[i];
+//   }
+//   let temp;
+//   for (let j = 0; j < result.length; j += 1) {
+//     for (let i = 0; i < result.length - 1; i += 1) {
+//       let a = arr[i];
+//       let b = arr[i + 1];
+//       if (a > b) {
+//         temp = a;
+//         a = b;
+//         b = temp;
+//         result[i] = a;
+//         result[i + 1] = b;
+//       }
+//     }
+//   }
+//   return result;
+// }
 
 /**
  * Shuffles characters in a string so that the characters with an odd index are moved to the end of the string at each iteration.
@@ -471,7 +506,7 @@ module.exports = {
   getBalanceIndex,
   getSpiralMatrix,
   rotateMatrix,
-  sortByAsc,
+  // sortByAsc,
   shuffleChar,
   getNearestBigger,
 };
