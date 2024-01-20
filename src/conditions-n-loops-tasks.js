@@ -428,28 +428,53 @@ function rotateMatrix(matrix) {
  *  [2, 9, 5]       => [2, 5, 9]
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
-//  */
-// function sortByAsc(arr) {
-//   const result = [];
-//   for (let i = 0; i < arr.length; i += 1) {
-//     result[i] = arr[i];
-//   }
-//   let temp;
-//   for (let j = 0; j < result.length; j += 1) {
-//     for (let i = 0; i < result.length - 1; i += 1) {
-//       let a = arr[i];
-//       let b = arr[i + 1];
-//       if (a > b) {
-//         temp = a;
-//         a = b;
-//         b = temp;
-//         result[i] = a;
-//         result[i + 1] = b;
-//       }
-//     }
-//   }
-//   return result;
-// }
+ */
+function sortByAsc(arr) {
+  const copyArr = arr;
+  if (copyArr.length > 1) {
+    const mid = Math.floor(copyArr.length / 2);
+
+    const left = [];
+    const right = [];
+
+    for (let i = 0; i < mid; i += 1) {
+      left[i] = copyArr[i];
+    }
+
+    for (let i = mid; i < copyArr.length; i += 1) {
+      right[i - mid] = copyArr[i];
+    }
+
+    let l = 0;
+    let r = 0;
+    let k = 0;
+
+    sortByAsc(left);
+    sortByAsc(right);
+
+    while (l < left.length && r < right.length) {
+      if (left[l] < right[r]) {
+        copyArr[k] = left[l];
+        l += 1;
+      } else {
+        copyArr[k] = right[r];
+        r += 1;
+      }
+      k += 1;
+    }
+    while (l < left.length) {
+      copyArr[k] = left[l];
+      l += 1;
+      k += 1;
+    }
+    while (r < right.length) {
+      copyArr[k] = right[r];
+      r += 1;
+      k += 1;
+    }
+  }
+  return arr;
+}
 
 /**
  * Shuffles characters in a string so that the characters with an odd index are moved to the end of the string at each iteration.
@@ -506,7 +531,7 @@ module.exports = {
   getBalanceIndex,
   getSpiralMatrix,
   rotateMatrix,
-  // sortByAsc,
+  sortByAsc,
   shuffleChar,
   getNearestBigger,
 };
