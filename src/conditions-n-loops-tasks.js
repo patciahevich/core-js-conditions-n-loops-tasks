@@ -541,8 +541,81 @@ function shuffleChar(str, iterations) {
  * @param {number} number The source number
  * @returns {number} The nearest larger number, or original number if none exists.
  */
-function getNearestBigger(/* number */) {
-  throw new Error('Not implemented');
+function getNearestBigger(number) {
+  function getFirstIndex(arr) {
+    for (let i = arr.length - 1; i > 0; i -= 1) {
+      if (arr[i - 1] < arr[i]) {
+        return i - 1;
+      }
+    }
+    return null;
+  }
+  function getIndex(arr, i) {
+    let n = null;
+    let index = null;
+    for (let k = arr.length; k > i; k -= 1) {
+      if (arr[k] > arr[i]) {
+        if (n) {
+          if (arr[k] < n) {
+            n = arr[k];
+            index = k;
+          }
+        } else {
+          n = arr[k];
+          index = k;
+        }
+      }
+    }
+    return index;
+  }
+  function sortArr(arr) {
+    const sortedArr = arr;
+    let temp;
+    for (let j = 0; j < sortedArr.length; j += 1) {
+      for (let i = 0; i < sortedArr.length - 1; i += 1) {
+        let a = sortedArr[i];
+        let b = sortedArr[i + 1];
+        if (a > b) {
+          temp = a;
+          a = b;
+          b = temp;
+          sortedArr[i] = a;
+          sortedArr[i + 1] = b;
+        }
+      }
+    }
+    return sortedArr;
+  }
+
+  const arr = [];
+  let str = `${number}`;
+  for (let i = 0; i < str.length; i += 1) {
+    arr[i] = +str[i];
+  }
+
+  const d1 = getFirstIndex(arr);
+  if (d1 === null) {
+    return number;
+  }
+  const d2 = getIndex(arr, d1);
+  [arr[d1], arr[d2]] = [arr[d2], arr[d1]];
+  const splitArr = [];
+  let index = 0;
+  for (let i = d1 + 1; i < arr.length; i += 1) {
+    splitArr[index] = arr[i];
+    index += 1;
+  }
+  const sortedArr = sortArr(splitArr);
+  index = 0;
+  for (let i = d1 + 1; i < arr.length; i += 1) {
+    arr[i] = sortedArr[index];
+    index += 1;
+  }
+  str = '';
+  for (let i = 0; i < arr.length; i += 1) {
+    str += arr[i];
+  }
+  return +str;
 }
 
 module.exports = {
